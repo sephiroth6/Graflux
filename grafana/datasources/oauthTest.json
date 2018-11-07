@@ -1,0 +1,7 @@
+{
+  "name": "auth.generic_oauth",
+  "type": "auth.generic_oauth",
+  "url": "",
+  "access": "proxy",
+  "client_id": "$GF_AUTH_GENERIC_OAUTH_CLIENT_ID"
+}
