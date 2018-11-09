@@ -24,4 +24,4 @@ if [ ! -f "/var/lib/grafana/.init" ]; then
     kill $(pgrep grafana)
 fi
 
-exec /run.sh $@
+exec /run.sh --config /app/conf/custom.ini $@

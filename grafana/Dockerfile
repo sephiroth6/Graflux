@@ -12,6 +12,7 @@ COPY datasources ./datasources
 
 WORKDIR /app
 COPY entrypoint.sh ./
+COPY custom.ini ./conf/
 USER root
 RUN chmod u+x entrypoint.sh
 ###USER grafana
