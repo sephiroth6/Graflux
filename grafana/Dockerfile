@@ -3,7 +3,6 @@ FROM grafana/grafana:5.3.4
 USER root
 RUN apt-get update && apt-get install -y curl gettext-base
 ####RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
-###RUN apt-get install -y curl gettext-base
 ###necessario per le cartelle?
 USER grafana
 
