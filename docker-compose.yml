@@ -1,4 +1,10 @@
-version: '0.2.2'
+version: '0.3'
+
+networks:
+  proxy:
+    external: true
+  internal:
+    external: false
 
 services:
   influxdb:
@@ -8,15 +14,36 @@ services:
       - '8086:8086'
     volumes:
       - influxdb_data:/var/lib/influxdb
+  
+  reverse-proxy:
+    image: traefik  # The official Traefik docker image
+    command: --api --docker  # Enables the web UI and tells Traefik to listen to docker
+    ports:
+      - "80:80"      # The HTTP port
+      - "8080:8080"  # The Web UI (enabled by --api)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # So that Traefik can listen to the Docker events
+  
   grafana:
     build: grafana
     env_file: configuration.env
     links:
       - influxdb
-    ports:
-      - '3000:3000'
+#    ports:
+#      - '3000:3000'
+    labels:
+      - traefik.backend=grafana
+      - traefik.frontend.rule=Host:graflux.localhost
+      - traefik.docker.network=proxy
+      - traefik.port=81
+#    networks: 
+#      - internal
+#      - proxy
     volumes:
       - grafana_data:/var/lib/grafana
+
+
+
 
 volumes:
   grafana_data: {}
